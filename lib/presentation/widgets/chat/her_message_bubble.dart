@@ -40,17 +40,27 @@ class _ImmageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //* MediaQuery nos da info del celular que esta corriendo el dispositivo
-    final size = MediaQuery.of(context).size; //* en este caso me da la medida del dispositivo
+    final size = MediaQuery.of(context)
+        .size; //* en este caso me da la medida del dispositivo
 
     return ClipRRect(
-        //? Permite hacer bordes redondeados
-        borderRadius: BorderRadius.circular(20),
-        child: Image.network(
-            'https://yesno.wtf/assets/yes/13-c3082a998e7758be8e582276f35d1336.gif',
+      //? Permite hacer bordes redondeados
+      borderRadius: BorderRadius.circular(20),
+      child: Image.network(
+        'https://yesno.wtf/assets/yes/13-c3082a998e7758be8e582276f35d1336.gif',
+        width: size.width * 0.7,
+        height: 150,
+        fit: BoxFit.cover,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Container(
             width: size.width * 0.7,
             height: 150,
-            fit: BoxFit.cover,
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: const Text('Está enviando una imagen'),
+          );
+        },
+      ),
     );
   }
 }
